@@ -1,0 +1,53 @@
+Codigo JAVASCRIPT
+let filmes=[];
+
+//cadastro
+document.getElementById("btnCadastrar").addEventListener("click",cadastrarFilme);
+
+//filtros
+document.getElementById("btnFiltarClass").addEventListener("click",filtrarClass);
+document.getElementById("btnFiltarAno").addEventListener("click",filtrarAno);
+
+    function cadastrarFilme(){
+        let titulo = document.getElementById('titulo').value;
+        let ano = document.getElementById('ano').value;
+        let classificacao = document.getElementById('classificacao').value;
+
+        //validação
+        if (titulo === "" || ano === "" || classificacao == "" ){
+        alert("Preencha todos os corpos ");
+        return;
+        }
+        let filme={
+        titulo:titulo,
+        ano:Number(ano),
+        classificacao: classificacao
+        };
+        filmes.push(filme);
+        limparCorpos();
+        exibirFilme(filmes);
+    }
+
+    function exibirFilme(lista){
+        let texto = lista.map(f=>`${f.titulo} (${f.ano}) - classificacao: ${f.classificacao}`).join("<br>");
+
+        document.getElementById("listarFilmes").innerHTML = texto
+    }
+
+    function filtrarClass(){
+        let filtro = document.getElementById("filtrarClass").value;
+        let resultado = filmes.filter(f => f.classificacao === filtro);
+        exibirFilme(resultado);
+    }
+
+    function filtrarAno(){
+        let filtro = Number(document.getElementById("filtrarAno").value);
+         let resultado = filmes.filter(f => f.ano === filtro);
+        exibirFilme(resultado)
+    }
+    function limparCorpos(){
+        document.getElementById('titulo').value = "";
+        document.getElementById('ano').value = "";
+        document.getElementById('classificacao').value = "";
+        document.getElementById('titulo').focus();
+    }
